@@ -39,8 +39,6 @@ sub calculate_calibration_total_2 {
         my $first_digit = $numbers[0];
         my $last_digit  = $numbers[-1];
 
-        print $first_digit . $last_digit . "\n";
-
         $total += $first_digit . $last_digit;
     }
 
@@ -79,12 +77,6 @@ sub extract_numbers_in_order_from_string {
         my $number_name;
         if ( ($number_name) = $substring =~ /^($pattern)/ ) {
             push( @numbers, $word_to_number{$number_name} );
-        }
-    }
-
-    for ( my $i = 0; $i < scalar @numbers; $i++ ) {
-        if ( exists( $word_to_number{ $numbers[$i] } ) ) {
-            $numbers[$i] = $word_to_number{ $numbers[$i] };
         }
     }
 
