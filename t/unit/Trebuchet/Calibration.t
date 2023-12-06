@@ -23,4 +23,16 @@ subtest 'calculate_calibration_total_2' => sub {
     is( $actual, 281, 'should add up the calibration values' );
 };
 
+subtest 'extract_numbers_in_order_from_string' => sub {
+    my $string = 'eightwo';
+    my $actual = Trebuchet::Calibration::extract_numbers_in_order_from_string($string);
+
+    is( $actual, [ 8, 2 ], 'should extract all digits even when the words overlap' );
+
+    $string = 'eight2';
+    $actual = Trebuchet::Calibration::extract_numbers_in_order_from_string($string);
+
+    is( $actual, [ 8, 2 ], 'should handle digits and number names' );
+};
+
 done_testing();
