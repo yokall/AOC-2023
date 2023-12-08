@@ -20,4 +20,4 @@ To check the test coverage, from the root of the project run `cover -t +select ^
 
 ## Static Code Analysis
 
-TODO
+To apply perl critic `perlcritic bin lib t`

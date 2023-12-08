@@ -1,0 +1,33 @@
+severity = 1
+verbose = 11
+theme = pbp && core
+
+# we always want this rule to be enabled so set severity to gentle
+[TestingAndDebugging::RequireUseStrict]
+severity = 5
+
+# we always want this rule to be enabled so set severity to gentle
+[TestingAndDebugging::RequireUseWarnings]
+severity = 5
+
+[InputOutput::RequireCheckedSyscalls]
+functions = :builtins
+exclude_functions = print say
+
+# excluded rules
+[-ControlStructures::ProhibitCascadingIfElse]
+[-ControlStructures::ProhibitCStyleForLoops]
+[-ControlStructures::ProhibitPostfixControls]
+[-ControlStructures::ProhibitUnlessBlocks]
+[-Documentation::RequirePodSections]
+[-InputOutput::ProhibitInteractiveTest]
+[-Modules::RequireVersionVar]
+[-RegularExpressions::RequireDotMatchAnything]
+[-RegularExpressions::RequireExtendedFormatting]
+[-RegularExpressions::RequireLineBoundaryMatching]
+[-ValuesAndExpressions::ProhibitEmptyQuotes]
+[-ValuesAndExpressions::ProhibitMagicNumbers]
+[-ValuesAndExpressions::ProhibitNoisyQuotes]
+[-Variables::ProhibitPackageVars]
+[-Variables::ProhibitPunctuationVars]
+[-Variables::ProhibitReusedNames]
