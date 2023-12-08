@@ -20,16 +20,8 @@ my $sum = sum @{$part_numbers};
 
 print 'Part 1 answer: ' . $sum . "\n";
 
-# $total = 0;
-# foreach my $line ( @{$puzzle_input} ) {
-#     my $game = CubeGame::GameAnalyser::parse_record($line);
+my $gear_ratios = GearRatios::PartNumberFinder::find_gear_ratios($puzzle_input);
 
-#     my $required_cube_count = CubeGame::GameAnalyser::get_required_cube_count($game);
+my $sum = sum @{$gear_ratios};
 
-#     my $power = 1;
-#     $power = $power * $_ foreach values %{$required_cube_count};
-
-#     $total += $power;
-# }
-
-# print 'Part 2 answer: ' . $total . "\n";
+print 'Part 2 answer: ' . $sum . "\n";

@@ -12,11 +12,14 @@ sub find_part_numbers {
         push( @schematic_chars, \@chars );
     }
 
+    my $max_y = scalar @schematic_chars;
+    my $max_x = scalar @{ $schematic_chars[0] };
+
     my @numbers;
     my $current_number   = '';
     my $is_a_part_number = 0;
-    for ( my $y = 0; $y < scalar @schematic_chars; $y++ ) {
-        for ( my $x = 0; $x < scalar @{ $schematic_chars[0] }; $x++ ) {
+    for ( my $y = 0; $y < $max_y; $y++ ) {
+        for ( my $x = 0; $x < $max_x; $x++ ) {
             if ( is_a_number( $schematic_chars[$y]->[$x] ) ) {
                 $current_number .= $schematic_chars[$y]->[$x];
 
@@ -26,9 +29,7 @@ sub find_part_numbers {
                         my $my = $y + $yy;
                         my $mx = $x + $xx;
                         if (   $mx >= 0
-                            && $mx < scalar @{ $schematic_chars[0] }
                             && $my >= 0
-                            && $my < scalar @schematic_chars
                             && defined( $schematic_chars[$my]->[$mx] ) )
                         {
                             my $check_char = $schematic_chars[$my]->[$mx];
@@ -71,11 +72,14 @@ sub find_gear_ratios {
         push( @schematic_chars, \@chars );
     }
 
+    my $max_y = scalar @schematic_chars;
+    my $max_x = scalar @{ $schematic_chars[0] };
+
     my @numbers;
     my $current_number = '';
     my $current_gear_location;
-    for ( my $y = 0; $y < scalar @schematic_chars; $y++ ) {
-        for ( my $x = 0; $x < scalar @{ $schematic_chars[0] }; $x++ ) {
+    for ( my $y = 0; $y < $max_y; $y++ ) {
+        for ( my $x = 0; $x < $max_x; $x++ ) {
             if ( is_a_number( $schematic_chars[$y]->[$x] ) ) {
                 $current_number .= $schematic_chars[$y]->[$x];
 
@@ -85,9 +89,7 @@ sub find_gear_ratios {
                         my $my = $y + $yy;
                         my $mx = $x + $xx;
                         if (   $mx >= 0
-                            && $mx < scalar @{ $schematic_chars[0] }
                             && $my >= 0
-                            && $my < scalar @schematic_chars
                             && defined( $schematic_chars[$my]->[$mx] ) )
                         {
                             my $check_char = $schematic_chars[$my]->[$mx];
@@ -106,10 +108,16 @@ sub find_gear_ratios {
         }
     }
 
-    # full list of numbers with gears
-    # loop through each number and look for matching number AFTER - will be a little inefficient as the 2nd in the pair will look again for the first
+    my @gear_ratios;
+    for ( my $i = 0; $i < scalar @numbers; $i++ ) {
+        for ( my $j = $i + 1; $j < scalar @numbers; $j++ ) {
+            if ( $numbers[$i]->{gear_location} eq $numbers[$j]->{gear_location} ) {
+                push( @gear_ratios, ( $numbers[$i]->{number} * $numbers[$j]->{number} ) );
+            }
+        }
+    }
 
-    return \@numbers;
+    return \@gear_ratios;
 }
 
 sub is_a_gear {
