@@ -24,4 +24,6 @@ my $gear_ratios = GearRatios::PartNumberFinder::find_gear_ratios($puzzle_input);
 
 my $sum = sum @{$gear_ratios};
 
+my $extra = 2;
+
 print 'Part 2 answer: ' . $sum . "\n";

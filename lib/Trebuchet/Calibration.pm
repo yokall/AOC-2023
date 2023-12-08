@@ -68,7 +68,7 @@ sub extract_numbers_in_order_from_string {
     my @numbers;
     for ( my $i = 0; $i < scalar @chars; $i++ ) {
         if ( $chars[$i] =~ /(\d)/ ) {
-            push( @numbers, $chars[$i] );
+            push @numbers, $chars[$i];
             next;
         }
 
@@ -76,7 +76,7 @@ sub extract_numbers_in_order_from_string {
 
         my $number_name;
         if ( ($number_name) = $substring =~ /^($pattern)/ ) {
-            push( @numbers, $word_to_number{$number_name} );
+            push @numbers, $word_to_number{$number_name};
         }
     }
 

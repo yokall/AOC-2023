@@ -9,7 +9,12 @@ use lib 'lib';
 
 use GearRatios::PartNumberFinder;
 
-my $schematic = [ '467..114..', '...*......', '..35..633.', '......#...', '617*......', '.....+.58.', '..592.....', '......755.', '...$.*....', '.664.598..', ];
+my $schematic;
+{
+## no critic 'RequireInterpolationOfMetachars'
+    $schematic
+        = [ '467..114..', '...*......', '..35..633.', '......#...', '617*......', '.....+.58.', '..592.....', '......755.', '...$.*....', '.664.598..', ];
+}
 
 subtest 'find_part_numbers' => sub {
     my @expected_part_numbers = qw/ 467 35 633 617 592 755 664 598 /;

@@ -8,8 +8,8 @@ sub find_part_numbers {
 
     my @schematic_chars;
     foreach my $line ( @{$schematic} ) {
-        my @chars = split( //, $line );
-        push( @schematic_chars, \@chars );
+        my @chars = split //, $line;
+        push @schematic_chars, \@chars;
     }
 
     my $max_y = scalar @schematic_chars;
@@ -30,7 +30,7 @@ sub find_part_numbers {
                         my $mx = $x + $xx;
                         if (   $mx >= 0
                             && $my >= 0
-                            && defined( $schematic_chars[$my]->[$mx] ) )
+                            && defined $schematic_chars[$my]->[$mx] )
                         {
                             my $check_char = $schematic_chars[$my]->[$mx];
                             if ( is_a_symbol($check_char) ) {
@@ -41,7 +41,7 @@ sub find_part_numbers {
                 }
             }
             elsif ( $current_number ne '' ) {
-                push( @numbers, $current_number ) if $is_a_part_number;
+                push @numbers, $current_number if $is_a_part_number;
                 $current_number   = '';
                 $is_a_part_number = 0;
             }
@@ -54,13 +54,13 @@ sub find_part_numbers {
 sub is_a_number {
     my $char = shift;
 
-    return ( $char =~ /^[0-9]$/ );
+    return ( $char =~ /^\d$/ );
 }
 
 sub is_a_symbol {
     my $char = shift;
 
-    return !( $char =~ /^[0-9\.]$/ );
+    return !( $char =~ /^[\d.]$/ );
 }
 
 sub find_gear_ratios {
@@ -68,8 +68,8 @@ sub find_gear_ratios {
 
     my @schematic_chars;
     foreach my $line ( @{$schematic} ) {
-        my @chars = split( //, $line );
-        push( @schematic_chars, \@chars );
+        my @chars = split //, $line;
+        push @schematic_chars, \@chars;
     }
 
     my $max_y = scalar @schematic_chars;
@@ -90,7 +90,7 @@ sub find_gear_ratios {
                         my $mx = $x + $xx;
                         if (   $mx >= 0
                             && $my >= 0
-                            && defined( $schematic_chars[$my]->[$mx] ) )
+                            && defined $schematic_chars[$my]->[$mx] )
                         {
                             my $check_char = $schematic_chars[$my]->[$mx];
                             if ( is_a_gear($check_char) ) {
@@ -101,7 +101,7 @@ sub find_gear_ratios {
                 }
             }
             elsif ( $current_number ne '' ) {
-                push( @numbers, { number => $current_number, gear_location => $current_gear_location } ) if defined($current_gear_location);
+                push @numbers, { number => $current_number, gear_location => $current_gear_location } if defined $current_gear_location;
                 $current_number        = '';
                 $current_gear_location = undef;
             }
@@ -112,7 +112,7 @@ sub find_gear_ratios {
     for ( my $i = 0; $i < scalar @numbers; $i++ ) {
         for ( my $j = $i + 1; $j < scalar @numbers; $j++ ) {
             if ( $numbers[$i]->{gear_location} eq $numbers[$j]->{gear_location} ) {
-                push( @gear_ratios, ( $numbers[$i]->{number} * $numbers[$j]->{number} ) );
+                push @gear_ratios, ( $numbers[$i]->{number} * $numbers[$j]->{number} );
             }
         }
     }
@@ -123,7 +123,7 @@ sub find_gear_ratios {
 sub is_a_gear {
     my $char = shift;
 
-    return ( $char =~ /^[\*]$/ );
+    return ( $char =~ /^[*]$/ );
 }
 
 1;

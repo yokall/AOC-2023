@@ -10,13 +10,13 @@ use lib 'lib';
 use CubeGame::GameAnalyser;
 
 subtest 'parse_record' => sub {
-    my $record = 'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green';
+    my $game_record = 'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green';
 
-    my $game = CubeGame::GameAnalyser::parse_record($record);
+    my $game = CubeGame::GameAnalyser::parse_record($game_record);
 
     my $expected_game = {
-        id   => 1,
-        sets => [ { blue => 3, red => 4 }, { red => 1, green => 2, blue => 6 }, { green => 2 } ]
+        game_id   => 1,
+        game_sets => [ { blue => 3, red => 4 }, { red => 1, green => 2, blue => 6 }, { green => 2 } ]
     };
 
     is( $game, $expected_game, 'should parse the string into a game hash containing the game ID and sets' );
@@ -38,7 +38,7 @@ subtest 'game_is_possible' => sub {
 
 subtest 'get_required_cube_count' => sub {
     my $game = {
-        'sets' => [
+        'game_sets' => [
             {   'blue' => '3',
                 'red'  => '4'
             },
@@ -48,7 +48,7 @@ subtest 'get_required_cube_count' => sub {
             },
             { 'green' => '2' }
         ],
-        'id' => '1'
+        'game_id' => '1'
     };
 
     my $required_cube_count = CubeGame::GameAnalyser::get_required_cube_count($game);
