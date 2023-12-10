@@ -3,6 +3,8 @@ package CubeGame::GameAnalyser;
 use strict;
 use warnings;
 
+use Common::String;
+
 sub parse_record {
     my $game_record = shift;
 
@@ -14,7 +16,7 @@ sub parse_record {
     foreach my $game_set_string ( split /;/, $game_sets_string ) {
         my %game_set;
         foreach my $colour_count ( split /,/, $game_set_string ) {
-            $colour_count = _trim($colour_count);
+            $colour_count = Common::String::trim($colour_count);
 
             my ( $count, $colour ) = split / /, $colour_count;
 
@@ -28,15 +30,6 @@ sub parse_record {
         game_id   => $game_id,
         game_sets => \@game_sets
     };
-}
-
-sub _trim {
-    my $string = shift;
-
-    $string =~ s/^\s+//;
-    $string =~ s/\s+$//;
-
-    return $string;
 }
 
 sub game_is_possible {
