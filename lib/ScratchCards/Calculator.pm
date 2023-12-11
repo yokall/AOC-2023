@@ -3,6 +3,8 @@ package ScratchCards::Calculator;
 use strict;
 use warnings;
 
+use List::MoreUtils qw(any);
+
 my @matching_card_counts;
 
 sub calculate_worth {
@@ -37,7 +39,7 @@ sub _count_matching_numbers {
 
     my $matching_number_count = 0;
     foreach my $number ( @{ $card->{numbers} } ) {
-        if ( grep( /^$number$/, @winning_numbers ) ) {
+        if ( any {/^$number$/} @winning_numbers ) {
             $matching_number_count++;
         }
     }

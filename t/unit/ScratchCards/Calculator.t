@@ -47,7 +47,7 @@ subtest 'process' => sub {
     ];
 
     my $count = 0;
-    foreach my $card_number ( 1 .. scalar( @{$cards} ) ) {
+    foreach my $card_number ( 1 .. scalar @{$cards} ) {
         $count += ScratchCards::Calculator::process_cards( $cards, $card_number );
     }
 
