@@ -1,3 +1,4 @@
+requires 'Clone',           '0.46';
 requires 'Devel::Cover',    '1.40';
 requires 'List::MoreUtils', '0.430';
 requires 'Perl::Critic',    '1.152';
