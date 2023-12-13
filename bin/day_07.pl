@@ -31,4 +31,16 @@ for my $i ( 1 .. scalar @{$sorted_hands} ) {
 
 print 'Part 1 answer: ' . $total . "\n";
 
-# print 'Part 2 answer: ' . scalar @{$strategies} . "\n";
+my @joker_hands;
+foreach my $line ( @{$puzzle_input} ) {
+    push @joker_hands, CamelCards::Hand->new( $line, 1 );
+}
+
+$sorted_hands = CamelCards::SortHands::sort_hands( \@joker_hands, 1 );
+
+$total = 0;
+for my $i ( 1 .. scalar @{$sorted_hands} ) {
+    $total += $sorted_hands->[ $i - 1 ]->bid * $i;
+}
+
+print 'Part 2 answer: ' . $total . "\n";

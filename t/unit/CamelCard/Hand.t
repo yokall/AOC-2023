@@ -46,6 +46,36 @@ subtest 'new' => sub {
 
         is( $hand->strength, 1, 'High card' );
     };
+
+    subtest 'should calculate the hand strength with joker rules' => sub {
+        my $hand = CamelCards::Hand->new( 'AAAAA 765', 1 );
+
+        is( $hand->strength, 7, 'Five of a kind' );
+
+        $hand = CamelCards::Hand->new( 'AAJAA 765', 1 );
+
+        is( $hand->strength, 7, 'Four of a kind' );
+
+        $hand = CamelCards::Hand->new( 'J333J 765', 1 );
+
+        is( $hand->strength, 7, 'Full house' );
+
+        $hand = CamelCards::Hand->new( 'TTT9J 765', 1 );
+
+        is( $hand->strength, 6, 'Three of a kind' );
+
+        $hand = CamelCards::Hand->new( '23J32 765', 1 );
+
+        is( $hand->strength, 4, 'Two pair' );
+
+        $hand = CamelCards::Hand->new( 'A23AJ 765', 1 );
+
+        is( $hand->strength, 4, 'One pair' );
+
+        $hand = CamelCards::Hand->new( '2J456 765', 1 );
+
+        is( $hand->strength, 2, 'High card' );
+    };
 };
 
 done_testing();

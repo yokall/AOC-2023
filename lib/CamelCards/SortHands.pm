@@ -4,7 +4,8 @@ use strict;
 use warnings;
 
 sub sort_hands {
-    my $hands = shift;
+    my $hands       = shift;
+    my $joker_rules = shift;
 
     my @five_of_a_kind;
     my @four_of_a_kind;
@@ -24,13 +25,13 @@ sub sort_hands {
         push @five_of_a_kind,  $hand if $hand->strength == 7;
     }
 
-    @high_card       = @{ sort_hand_type( \@high_card ) };
-    @one_pair        = @{ sort_hand_type( \@one_pair ) };
-    @two_pair        = @{ sort_hand_type( \@two_pair ) };
-    @three_of_a_kind = @{ sort_hand_type( \@three_of_a_kind ) };
-    @full_house      = @{ sort_hand_type( \@full_house ) };
-    @four_of_a_kind  = @{ sort_hand_type( \@four_of_a_kind ) };
-    @five_of_a_kind  = @{ sort_hand_type( \@five_of_a_kind ) };
+    @high_card       = @{ sort_hand_type( \@high_card,       $joker_rules ) };
+    @one_pair        = @{ sort_hand_type( \@one_pair,        $joker_rules ) };
+    @two_pair        = @{ sort_hand_type( \@two_pair,        $joker_rules ) };
+    @three_of_a_kind = @{ sort_hand_type( \@three_of_a_kind, $joker_rules ) };
+    @full_house      = @{ sort_hand_type( \@full_house,      $joker_rules ) };
+    @four_of_a_kind  = @{ sort_hand_type( \@four_of_a_kind,  $joker_rules ) };
+    @five_of_a_kind  = @{ sort_hand_type( \@five_of_a_kind,  $joker_rules ) };
 
     my @sorted_hands;
     push @sorted_hands, @high_card;
@@ -45,7 +46,8 @@ sub sort_hands {
 }
 
 sub sort_hand_type {
-    my $hands = shift;
+    my $hands       = shift;
+    my $joker_rules = shift;
 
     my $hands_count = scalar @{$hands};
 
@@ -62,7 +64,7 @@ sub sort_hand_type {
 
                 next if $a eq $b;
 
-                if ( a_is_bigger_than_b( $a, $b ) ) {
+                if ( a_is_bigger_than_b( $a, $b, $joker_rules ) ) {
                     my $hand_a_obj = $hands->[$j];
                     my $hand_b_obj = $hands->[ $j + 1 ];
 
@@ -79,16 +81,17 @@ sub sort_hand_type {
 }
 
 sub a_is_bigger_than_b {
-    my ( $a, $b ) = @_;
+    my ( $a, $b, $joker_rules ) = @_;
 
-    $a = convert_to_number($a);
-    $b = convert_to_number($b);
+    $a = convert_to_number( $a, $joker_rules );
+    $b = convert_to_number( $b, $joker_rules );
 
     return ( $a > $b );
 }
 
 sub convert_to_number {
-    my $char = shift;
+    my $char        = shift;
+    my $joker_rules = shift;
 
     if ( $char eq 'A' ) {
         return 14;
@@ -100,6 +103,7 @@ sub convert_to_number {
         return 12;
     }
     elsif ( $char eq 'J' ) {
+        return 1 if $joker_rules;
         return 11;
     }
     elsif ( $char eq 'T' ) {
