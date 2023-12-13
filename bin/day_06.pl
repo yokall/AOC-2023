@@ -31,8 +31,8 @@ for my $i ( 0 .. $#times ) {
 
 print 'Part 1 answer: ' . $total . "\n";
 
-my $time     = join "", @times;
-my $distance = join "", @distances;
+my $time     = join '', @times;
+my $distance = join '', @distances;
 
 my $strategies = BoatRace::Strategy::calculate_strategies( $time, $distance );
 
