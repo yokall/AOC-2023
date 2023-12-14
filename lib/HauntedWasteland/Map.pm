@@ -4,10 +4,12 @@ use strict;
 use warnings;
 
 sub new {
-    my ( $class, $instructions, $map_description ) = @_;
+    my ( $class, $instruction_string, $map_description ) = @_;
+
+    my @instructions = split //, $instruction_string;
 
     my $self = bless {
-        instructions => $instructions,
+        instructions => \@instructions,
         network      => build_network($map_description),
     }, $class;
 
@@ -34,6 +36,26 @@ sub network {
     my $self = shift;
 
     return $self->{network};
+}
+
+sub follow_instructions {
+    my $self = shift;
+
+    return take_step( $self, 'AAA', 0 );
+}
+
+sub take_step {
+    my ( $self, $current_node_name, $step_count ) = @_;
+
+    my $instruction_index = $step_count < scalar @{ $self->{instructions} } ? $step_count : $step_count % scalar @{ $self->{instructions} };
+
+    my $next_node_name = $self->{network}->{$current_node_name}->{ $self->{instructions}->[$instruction_index] };
+
+    return $step_count + 1 if $next_node_name eq 'ZZZ';
+
+    $step_count++;
+
+    take_step( $self, $next_node_name, $step_count );
 }
 
 1;

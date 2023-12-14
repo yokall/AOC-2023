@@ -3,9 +3,10 @@
 use strict;
 use warnings;
 
+use FindBin;
 use Test2::V0;
 
-use lib 'lib';
+use lib "$FindBin::Bin/../../lib";
 
 use HauntedWasteland::Map;
 
@@ -27,6 +28,27 @@ subtest 'new' => sub {
     };
 
     is( $map->network, $expected_network, 'should build a network from the map description' );
+};
+
+subtest 'follow_instructions' => sub {
+    my $instructions = 'RL';
+    my $map_description
+        = [ 'AAA = (BBB, CCC)', 'BBB = (DDD, EEE)', 'CCC = (ZZZ, GGG)', 'DDD = (DDD, DDD)', 'EEE = (EEE, EEE)', 'GGG = (GGG, GGG)', 'ZZZ = (ZZZ, ZZZ)', ];
+
+    my $map = HauntedWasteland::Map->new( $instructions, $map_description );
+
+    my $number_of_steps = $map->follow_instructions();
+
+    is( $number_of_steps, 2, 'should return the number of steps to find ZZZ' );
+
+    $instructions    = 'LLR';
+    $map_description = [ 'AAA = (BBB, BBB)', 'BBB = (AAA, ZZZ)', 'ZZZ = (ZZZ, ZZZ)', ];
+
+    $map = HauntedWasteland::Map->new( $instructions, $map_description );
+
+    $number_of_steps = $map->follow_instructions();
+
+    is( $number_of_steps, 6, 'should return the number of steps to find ZZZ' );
 };
 
 done_testing();
