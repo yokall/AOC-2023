@@ -81,12 +81,12 @@ sub sort_hand_type {
 }
 
 sub a_is_bigger_than_b {
-    my ( $a, $b, $joker_rules ) = @_;
+    my ( $card_a, $card_b, $joker_rules ) = @_;
 
-    $a = convert_to_number( $a, $joker_rules );
-    $b = convert_to_number( $b, $joker_rules );
+    $card_a = convert_to_number( $card_a, $joker_rules );
+    $card_b = convert_to_number( $card_b, $joker_rules );
 
-    return ( $a > $b );
+    return ( $card_a > $card_b );
 }
 
 sub convert_to_number {
