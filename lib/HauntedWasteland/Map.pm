@@ -51,11 +51,11 @@ sub take_step {
 
     my $next_node_name = $self->{network}->{$current_node_name}->{ $self->{instructions}->[$instruction_index] };
 
-    return $step_count + 1 if $next_node_name eq 'ZZZ';
-
     $step_count++;
 
-    take_step( $self, $next_node_name, $step_count );
+    $step_count = take_step( $self, $next_node_name, $step_count ) unless $next_node_name eq 'ZZZ';
+
+    return $step_count;
 }
 
 1;
