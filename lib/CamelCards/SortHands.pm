@@ -59,12 +59,12 @@ sub sort_hand_type {
             my @hand_b = split //, $hands->[ $j + 1 ]->{hand};
 
             foreach my $ci ( 0 .. $#hand_a ) {
-                my $a = $hand_a[$ci];
-                my $b = $hand_b[$ci];
+                my $card_a = $hand_a[$ci];
+                my $card_b = $hand_b[$ci];
 
-                next if $a eq $b;
+                next if $card_a eq $card_b;
 
-                if ( a_is_bigger_than_b( $a, $b, $joker_rules ) ) {
+                if ( a_is_bigger_than_b( $card_a, $card_b, $joker_rules ) ) {
                     my $hand_a_obj = $hands->[$j];
                     my $hand_b_obj = $hands->[ $j + 1 ];
 
