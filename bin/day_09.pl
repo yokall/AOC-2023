@@ -27,4 +27,13 @@ foreach my $line ( @{$puzzle_input} ) {
 
 print 'Part 1 answer: ' . $total . "\n";
 
-# print 'Part 2 answer: ' . $total . "\n";
+$total = 0;
+foreach my $line ( @{$puzzle_input} ) {
+    my @sequence = split / /, $line;
+
+    my $sequences = MirageMaintenance::HistoryAnalyser::fully_analyse_history( \@sequence );
+
+    $total += MirageMaintenance::HistoryAnalyser::extrapolate_previous_step($sequences);
+}
+
+print 'Part 2 answer: ' . $total . "\n";

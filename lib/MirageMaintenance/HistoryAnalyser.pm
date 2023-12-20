@@ -64,4 +64,22 @@ sub extrapolate_next_step {
     return $next_steps[-1];
 }
 
+sub extrapolate_previous_step {
+    my $ranges = shift;
+
+    my @previous_steps;
+
+    for my $ri ( reverse 0 .. scalar @{$ranges} - 2 ) {
+        my $first_step_value = $ranges->[$ri]->[0];
+        my $step_size        = $ranges->[ $ri + 1 ]->[0];
+
+        my $previous_step = $first_step_value - $step_size;
+
+        push @previous_steps, $previous_step;
+        unshift @{ $ranges->[$ri] }, $previous_step;
+    }
+
+    return $previous_steps[-1];
+}
+
 1;
