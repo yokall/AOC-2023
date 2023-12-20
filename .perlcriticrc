@@ -15,6 +15,7 @@ functions = :builtins
 exclude_functions = print say
 
 # excluded rules
+[-CodeLayout::RequireTidyCode]
 [-ControlStructures::ProhibitCascadingIfElse]
 [-ControlStructures::ProhibitCStyleForLoops]
 [-ControlStructures::ProhibitPostfixControls]
