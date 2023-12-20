@@ -23,4 +23,6 @@ my $number_of_steps = $map->follow_instructions();
 
 print 'Part 1 answer: ' . $number_of_steps . "\n";
 
-# print 'Part 2 answer: ' . $total . "\n";
+$number_of_steps = $map->follow_multiple_paths();
+
+print 'Part 2 answer: ' . $number_of_steps . "\n";

@@ -51,4 +51,24 @@ subtest 'follow_instructions' => sub {
     is( $number_of_steps, 6, 'should return the number of steps to find ZZZ' );
 };
 
+subtest 'follow_multiple_paths' => sub {
+    my $instructions    = 'LR';
+    my $map_description = [
+        '11A = (11B, XXX)',
+        '11B = (XXX, 11Z)',
+        '11Z = (11B, XXX)',
+        '22A = (22B, XXX)',
+        '22B = (22C, 22C)',
+        '22C = (22Z, 22Z)',
+        '22Z = (22B, 22B)',
+        'XXX = (XXX, XXX)',
+    ];
+
+    my $map = HauntedWasteland::Map->new( $instructions, $map_description );
+
+    my $number_of_steps = $map->follow_multiple_paths();
+
+    is( $number_of_steps, 6, 'should return the number of steps to find ZZZ on all paths at the same time' );
+};
+
 done_testing();
